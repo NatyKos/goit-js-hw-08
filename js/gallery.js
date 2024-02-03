@@ -67,13 +67,13 @@ const gallery = document.querySelector('.gallery');
 
 function createGallery(images) {
   return images.map(({ preview, original, description }) =>`
-  <li class="gallery-item">
-    <a class="gallery-link" href="${original}">
+  <li class='gallery-item'>
+    <a class='gallery-link' href='${original}'>
       <img
-        class="gallery-image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
+        class'gallery-image'
+        src='${preview}'
+        data-source='${original}'
+        alt='${description}'
       />
     </a>
   </li>`).join('');
@@ -92,7 +92,7 @@ function clickHandler(event) {
     const clickImg = card.href;
     const {original, description} = images.find((image) => image.original === clickImg)
     modalWindow = basicLightbox.create(`
-    <div class="modal">
+    <div class='modal'>
         <img src = '${original}' alt = '${description}'
         />
     </div>
@@ -101,8 +101,14 @@ function clickHandler(event) {
   }
 }
 
-document.addEventListener('keyup', ({code}) => {
-  if (code === 'Escape') {
-    modalWindow.close()
-  }
-})
+const handleEscape = (event) => {
+  if (event.key === 'Escape' && modalWindow) {
+      modalWindow.close()
+    }
+};
+  
+document.addEventListener('keyup', handleEscape);
+
+modalWindow.onClose (() => {
+  document.removeEventListener('keyup', handleEscape);
+});
